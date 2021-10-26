@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DateFormatter {
+public class DateUtils {
 
     private final SimpleDateFormat millisecondsToDateFormatter = new SimpleDateFormat("mm:ss.SSS");
     private final SimpleDateFormat dateToStringFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS");

@@ -10,16 +10,19 @@ import java.util.NoSuchElementException;
 public class DataReader {
 
     private static final String RESOURCES_PATH = "src/main/resources/";
-    private static final String ABBREVIATIONS = "abbreviations.txt";
-    private static final String START = "start.log";
-    private static final String END = "end.log";
+    private static final String ABBREVIATIONS_FILE = "abbreviations.txt";
+    private static final String START_LOG = "start.log";
+    private static final String END_LOG = "end.log";
 
-    private final DateFormatter dateFormatter = new DateFormatter();
+    private final List<String> startLapTimes = getDataFromFile(START_LOG);
+    private final List<String> endLapTimes = getDataFromFile(END_LOG);
+
+    private final DateUtils dateUtils = new DateUtils();
 
     public List<Racer> getRacersList() {
 
         List<Racer> racers = new ArrayList<>();
-        List<String> racersData = getStringsFromAbbreviationsFile();
+        List<String> racersData = getDataFromFile(ABBREVIATIONS_FILE);
 
         racersData.forEach(el -> {
             String[] racerData = el.split("_");
@@ -27,19 +30,8 @@ public class DataReader {
             racer.setBestLapTime(getTimeByAbbreviation(racer.getAbbreviation()));
             racers.add(racer);
         });
+
         return racers;
-    }
-
-    private List<String> getStringsFromAbbreviationsFile() {
-        return getDataFromFile(ABBREVIATIONS);
-    }
-
-    private List<String> getStringsFromStartFile() {
-        return getDataFromFile(START);
-    }
-
-    private List<String> getStringsFromEndFile() {
-        return getDataFromFile(END);
     }
 
     private List<String> getDataFromFile(String fileName) {
@@ -52,7 +44,12 @@ public class DataReader {
                 data.add(fileReader.readLine());
             }
         } catch (IOException e) {
-            e.printStackTrace();
+
+            try {
+                throw new DataReaderException("Cannot read " + fileName + ". Check file name");
+            } catch (DataReaderException dataReaderException) {
+                dataReaderException.printStackTrace();
+            }
         }
 
         return data;
@@ -60,19 +57,19 @@ public class DataReader {
 
     private String getTimeByAbbreviation(String abbreviation) {
 
-        String startTime = getStringsFromStartFile()
+        String startTime = startLapTimes
             .stream()
             .filter(el -> el.startsWith(abbreviation))
             .findFirst()
             .orElseThrow(NoSuchElementException::new);
 
-        String endTime = getStringsFromEndFile()
+        String endTime = endLapTimes
             .stream()
             .filter(el -> el.startsWith(abbreviation))
             .findFirst()
             .orElseThrow(NoSuchElementException::new);
 
-        return dateFormatter.getTimeDifference(startTime, endTime);
+        return dateUtils.getTimeDifference(startTime, endTime);
     }
 
 }
