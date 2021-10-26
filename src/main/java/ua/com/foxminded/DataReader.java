@@ -17,8 +17,6 @@ public class DataReader {
     private final List<String> startLapTimes = getDataFromFile(START_LOG);
     private final List<String> endLapTimes = getDataFromFile(END_LOG);
 
-    private final DateUtils dateUtils = new DateUtils();
-
     public List<Racer> getRacersList() {
 
         List<Racer> racers = new ArrayList<>();
@@ -30,6 +28,8 @@ public class DataReader {
             racer.setBestLapTime(getTimeByAbbreviation(racer.getAbbreviation()));
             racers.add(racer);
         });
+
+        racers.sort(new RacerComparator());
 
         return racers;
     }
@@ -55,7 +55,7 @@ public class DataReader {
         return data;
     }
 
-    private String getTimeByAbbreviation(String abbreviation) {
+    private long getTimeByAbbreviation(String abbreviation) {
 
         String startTime = startLapTimes
             .stream()
@@ -69,7 +69,7 @@ public class DataReader {
             .findFirst()
             .orElseThrow(NoSuchElementException::new);
 
-        return dateUtils.getTimeDifference(startTime, endTime);
+        return DateUtils.getTimeDifference(startTime, endTime);
     }
 
 }

@@ -4,21 +4,21 @@ public class Racer {
 
     private final String abbreviation;
     private final String name;
-    private final String command;
-    private String bestLapTime;
+    private final String team;
+    private long bestLapTime;
 
-    public Racer(String abbreviation, String name, String command) {
+    public Racer(String abbreviation, String name, String team) {
         this.abbreviation = abbreviation;
         this.name = name;
-        this.command = command;
+        this.team = team;
     }
 
-    public void setBestLapTime(String bestLapTime) {
-        this.bestLapTime = bestLapTime;
-    }
-
-    public String getBestLapTime() {
+    public long getBestLapTime() {
         return bestLapTime;
+    }
+
+    public void setBestLapTime(long bestLapTime) {
+        this.bestLapTime = bestLapTime;
     }
 
     public String getAbbreviation() {
@@ -29,8 +29,8 @@ public class Racer {
         return name;
     }
 
-    public String getCommand() {
-        return command;
+    public String getTeam() {
+        return team;
     }
 
 }

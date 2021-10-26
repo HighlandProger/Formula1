@@ -6,19 +6,25 @@ import java.util.Date;
 
 public class DateUtils {
 
-    private final SimpleDateFormat millisecondsToDateFormatter = new SimpleDateFormat("mm:ss.SSS");
-    private final SimpleDateFormat dateToStringFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS");
+    private static final SimpleDateFormat millisecondsToDateFormatter = new SimpleDateFormat("mm:ss.SSS");
+    private static final SimpleDateFormat dateToStringFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS");
 
-    public String getTimeDifference(String startTimeString, String endTimeString) {
+    private DateUtils() {
+    }
+
+    public static long getTimeDifference(String startTimeString, String endTimeString) {
 
         Date startDate = getDateFromString(startTimeString);
         Date endDate = getDateFromString(endTimeString);
-        long timeDifference = getDateDifference(startDate, endDate);
 
-        return getTimeFromMilliseconds(timeDifference);
+        return getDateDifference(startDate, endDate);
     }
 
-    private Date getDateFromString(String logString) {
+    public static String getTimeFromMilliseconds(long milliseconds) {
+        return millisecondsToDateFormatter.format(milliseconds);
+    }
+
+    private static Date getDateFromString(String logString) {
 
         StringBuilder builder = new StringBuilder(logString);
         String dateString = builder.substring(3);
@@ -33,12 +39,8 @@ public class DateUtils {
         return date;
     }
 
-    private long getDateDifference(Date startDate, Date endDate) {
+    private static long getDateDifference(Date startDate, Date endDate) {
         return endDate.getTime() - startDate.getTime();
-    }
-
-    private String getTimeFromMilliseconds(long milliseconds) {
-        return millisecondsToDateFormatter.format(milliseconds);
     }
 
 }
