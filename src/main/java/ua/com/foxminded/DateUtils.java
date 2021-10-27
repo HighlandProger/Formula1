@@ -6,8 +6,8 @@ import java.util.Date;
 
 public class DateUtils {
 
-    private static final SimpleDateFormat millisecondsToDateFormatter = new SimpleDateFormat("mm:ss.SSS");
-    private static final SimpleDateFormat dateToStringFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS");
+    private static final String TIME_PATTERN = "mm:ss.SSS";
+    private static final String DATE_TIME_PATTERN = "yyyy-MM-dd_HH:mm:ss.SSS";
 
     private DateUtils() {
     }
@@ -21,17 +21,18 @@ public class DateUtils {
     }
 
     public static String getTimeFromMilliseconds(long milliseconds) {
-        return millisecondsToDateFormatter.format(milliseconds);
+
+        SimpleDateFormat dateFormatter = new SimpleDateFormat(TIME_PATTERN);
+        return dateFormatter.format(milliseconds);
     }
 
-    private static Date getDateFromString(String logString) {
+    private static Date getDateFromString(String dateString) {
 
-        StringBuilder builder = new StringBuilder(logString);
-        String dateString = builder.substring(3);
+        SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_TIME_PATTERN);
         Date date = new Date();
 
         try {
-            date = dateToStringFormatter.parse(dateString);
+            date = dateFormatter.parse(dateString);
         } catch (ParseException e) {
             e.printStackTrace();
         }

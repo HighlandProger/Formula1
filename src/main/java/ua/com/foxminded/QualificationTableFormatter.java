@@ -42,30 +42,26 @@ public class QualificationTableFormatter {
     }
 
     private String getTeamFieldExtraSpaces(String word) {
-        return getSymbolsByCount(SPACE, MIN_TEAM_FIELD_SYMBOLS_SIZE, word.length());
+
+        int startPosition = word.length();
+
+        StringBuilder builder = new StringBuilder();
+        for (int i = startPosition; i < MIN_TEAM_FIELD_SYMBOLS_SIZE; i++) {
+            builder.append(SPACE);
+        }
+
+        return builder.toString();
     }
+
 
     private String getTopRacersDashesString() {
-        return getSymbolsByCount(DASH, TOP_RACERS_UNDERLINE_DASHES_COUNT);
-    }
-
-    private String getSymbolsByCount(String symbol, int count) {
 
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < count; i++) {
-            builder.append(symbol);
+        for (int i = 0; i < TOP_RACERS_UNDERLINE_DASHES_COUNT; i++) {
+            builder.append(DASH);
         }
 
         return builder.toString();
     }
 
-    private String getSymbolsByCount(String symbol, int count, int startPosition) {
-
-        StringBuilder builder = new StringBuilder();
-        for (int i = startPosition; i < count; i++) {
-            builder.append(symbol);
-        }
-
-        return builder.toString();
-    }
 }

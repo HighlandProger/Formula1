@@ -14,13 +14,16 @@ public class DataReader {
     private static final String START_LOG = "start.log";
     private static final String END_LOG = "end.log";
 
-    private final List<String> startLapTimes = getDataFromFile(START_LOG);
-    private final List<String> endLapTimes = getDataFromFile(END_LOG);
+    private List<String> startLapTimes;
+    private List<String> endLapTimes;
 
     public List<Racer> getRacersList() {
 
         List<Racer> racers = new ArrayList<>();
         List<String> racersData = getDataFromFile(ABBREVIATIONS_FILE);
+
+        startLapTimes = getDataFromFile(START_LOG);
+        endLapTimes = getDataFromFile(END_LOG);
 
         racersData.forEach(el -> {
             String[] racerData = el.split("_");
@@ -44,12 +47,7 @@ public class DataReader {
                 data.add(fileReader.readLine());
             }
         } catch (IOException e) {
-
-            try {
-                throw new DataReaderException("Cannot read " + fileName + ". Check file name");
-            } catch (DataReaderException dataReaderException) {
-                dataReaderException.printStackTrace();
-            }
+            throw new DataReaderException("Cannot read " + fileName + ". Check file name");
         }
 
         return data;
@@ -61,12 +59,14 @@ public class DataReader {
             .stream()
             .filter(el -> el.startsWith(abbreviation))
             .findFirst()
+            .map(logString -> new StringBuilder(logString).substring(3))
             .orElseThrow(NoSuchElementException::new);
 
         String endTime = endLapTimes
             .stream()
             .filter(el -> el.startsWith(abbreviation))
             .findFirst()
+            .map(logString -> new StringBuilder(logString).substring(3))
             .orElseThrow(NoSuchElementException::new);
 
         return DateUtils.getTimeDifference(startTime, endTime);
