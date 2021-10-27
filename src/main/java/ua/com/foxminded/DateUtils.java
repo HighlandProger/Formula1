@@ -17,31 +17,27 @@ public class DateUtils {
         Date startDate = getDateFromString(startTimeString);
         Date endDate = getDateFromString(endTimeString);
 
-        return getDateDifference(startDate, endDate);
+        return endDate.getTime() - startDate.getTime();
     }
 
-    public static String getTimeFromMilliseconds(long milliseconds) {
+    public static String formatTime(long milliseconds) {
 
         SimpleDateFormat dateFormatter = new SimpleDateFormat(TIME_PATTERN);
         return dateFormatter.format(milliseconds);
     }
 
-    private static Date getDateFromString(String dateString) {
+    public static Date getDateFromString(String dateString) {
 
         SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_TIME_PATTERN);
-        Date date = new Date();
+        Date date;
 
         try {
             date = dateFormatter.parse(dateString);
         } catch (ParseException e) {
-            e.printStackTrace();
+            throw new DateUtilsException("Cannot read " + dateString + ". Check date string");
         }
 
         return date;
-    }
-
-    private static long getDateDifference(Date startDate, Date endDate) {
-        return endDate.getTime() - startDate.getTime();
     }
 
 }

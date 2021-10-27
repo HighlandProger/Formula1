@@ -25,10 +25,10 @@ public class DataReader {
         startLapTimes = getDataFromFile(START_LOG);
         endLapTimes = getDataFromFile(END_LOG);
 
-        racersData.forEach(el -> {
-            String[] racerData = el.split("_");
+        racersData.forEach(row -> {
+            String[] racerData = row.split("_");
             Racer racer = new Racer(racerData[0], racerData[1], racerData[2]);
-            racer.setBestLapTime(getTimeByAbbreviation(racer.getAbbreviation()));
+            racer.setBestLapTime(getBestLapTimeByAbbreviation(racer.getAbbreviation()));
             racers.add(racer);
         });
 
@@ -53,23 +53,22 @@ public class DataReader {
         return data;
     }
 
-    private long getTimeByAbbreviation(String abbreviation) {
+    private long getBestLapTimeByAbbreviation(String abbreviation) {
 
-        String startTime = startLapTimes
+        String startTime = getTimePointByAbbreviation(startLapTimes, abbreviation);
+        String endTime = getTimePointByAbbreviation(endLapTimes, abbreviation);
+
+        return DateUtils.getDateFromString(endTime).getTime() - DateUtils.getDateFromString(startTime).getTime();
+    }
+
+    private String getTimePointByAbbreviation(List<String> timePoints, String abbreviation) {
+
+        return timePoints
             .stream()
             .filter(el -> el.startsWith(abbreviation))
             .findFirst()
-            .map(logString -> new StringBuilder(logString).substring(3))
+            .map(logString -> logString.substring(3))
             .orElseThrow(NoSuchElementException::new);
-
-        String endTime = endLapTimes
-            .stream()
-            .filter(el -> el.startsWith(abbreviation))
-            .findFirst()
-            .map(logString -> new StringBuilder(logString).substring(3))
-            .orElseThrow(NoSuchElementException::new);
-
-        return DateUtils.getTimeDifference(startTime, endTime);
     }
 
 }

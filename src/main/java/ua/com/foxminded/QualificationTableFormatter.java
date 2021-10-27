@@ -34,34 +34,29 @@ public class QualificationTableFormatter {
                 .append(racer.getTeam())
                 .append(getTeamFieldExtraSpaces(racer.getTeam()))
                 .append(DELIMITER)
-                .append(DateUtils.getTimeFromMilliseconds(racer.getBestLapTime()))
+                .append(DateUtils.formatTime(racer.getBestLapTime()))
                 .append(NEW_LINE);
         }
 
         return builder.toString();
     }
 
-    private String getTeamFieldExtraSpaces(String word) {
-
-        int startPosition = word.length();
+    private String repeatSymbols(String symbol, int count){
 
         StringBuilder builder = new StringBuilder();
-        for (int i = startPosition; i < MIN_TEAM_FIELD_SYMBOLS_SIZE; i++) {
-            builder.append(SPACE);
+        for (int i = 0; i < count; i++) {
+            builder.append(symbol);
         }
 
         return builder.toString();
     }
 
+    private String getTeamFieldExtraSpaces(String teamName) {
+        return repeatSymbols(SPACE, MIN_TEAM_FIELD_SYMBOLS_SIZE - teamName.length());
+    }
 
     private String getTopRacersDashesString() {
-
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < TOP_RACERS_UNDERLINE_DASHES_COUNT; i++) {
-            builder.append(DASH);
-        }
-
-        return builder.toString();
+        return repeatSymbols(DASH, TOP_RACERS_UNDERLINE_DASHES_COUNT);
     }
 
 }
