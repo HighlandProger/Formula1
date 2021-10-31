@@ -1,4 +1,4 @@
-package ua.com.foxminded;
+package ua.com.foxminded.domain;
 
 import java.util.Comparator;
 

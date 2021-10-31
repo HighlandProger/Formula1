@@ -1,6 +1,10 @@
-package ua.com.foxminded;
+package ua.com.foxminded.formatter;
+
+import ua.com.foxminded.domain.Racer;
+import ua.com.foxminded.util.DateUtils;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class QualificationTableFormatter {
 
@@ -9,8 +13,11 @@ public class QualificationTableFormatter {
     private static final String DELIMITER = " | ";
     private static final String DASH = "-";
     private static final int TOP_RACERS_COUNT = 15;
-    private static final int MIN_TEAM_FIELD_SYMBOLS_SIZE = 25;
-    private static final int TOP_RACERS_UNDERLINE_DASHES_COUNT = 30;
+    private static final int MAX_SERIAL_NUMBER_AND_DELIMITER_SYMBOLS_COUNT = 19;
+
+    private final List<Racer> racers = new DataReader().getRacers();
+    private final int maxTeamFieldSymbolsSize = getMaxTeamFieldSymbolsSize();
+    private final int topRacersUnderlineDashesCount = getTopRacersUnderlineDashesCount();
 
     public String format(List<Racer> racers) {
 
@@ -41,7 +48,7 @@ public class QualificationTableFormatter {
         return builder.toString();
     }
 
-    private String repeatSymbols(String symbol, int count){
+    private String repeatSymbols(String symbol, int count) {
 
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < count; i++) {
@@ -52,11 +59,31 @@ public class QualificationTableFormatter {
     }
 
     private String getTeamFieldExtraSpaces(String teamName) {
-        return repeatSymbols(SPACE, MIN_TEAM_FIELD_SYMBOLS_SIZE - teamName.length());
+        return repeatSymbols(SPACE, maxTeamFieldSymbolsSize - teamName.length());
     }
 
     private String getTopRacersDashesString() {
-        return repeatSymbols(DASH, TOP_RACERS_UNDERLINE_DASHES_COUNT);
+        return repeatSymbols(DASH, topRacersUnderlineDashesCount);
+    }
+
+    private int getTopRacersUnderlineDashesCount() {
+
+        int maxNameAndTeamFieldsSymbolsSize = racers
+            .stream()
+            .mapToInt(el -> el.getName().length() + el.getTeam().length())
+            .max()
+            .orElseThrow(NoSuchElementException::new);
+
+        return maxNameAndTeamFieldsSymbolsSize + MAX_SERIAL_NUMBER_AND_DELIMITER_SYMBOLS_COUNT;
+    }
+
+    private int getMaxTeamFieldSymbolsSize() {
+
+        return racers
+            .stream()
+            .mapToInt(row -> row.getTeam().length())
+            .max()
+            .orElseThrow(NullPointerException::new);
     }
 
 }

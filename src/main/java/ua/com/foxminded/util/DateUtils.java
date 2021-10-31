@@ -1,4 +1,6 @@
-package ua.com.foxminded;
+package ua.com.foxminded.util;
+
+import ua.com.foxminded.exception.DateParseException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,14 +12,6 @@ public class DateUtils {
     private static final String DATE_TIME_PATTERN = "yyyy-MM-dd_HH:mm:ss.SSS";
 
     private DateUtils() {
-    }
-
-    public static long getTimeDifference(String startTimeString, String endTimeString) {
-
-        Date startDate = getDateFromString(startTimeString);
-        Date endDate = getDateFromString(endTimeString);
-
-        return endDate.getTime() - startDate.getTime();
     }
 
     public static String formatTime(long milliseconds) {
@@ -34,7 +28,7 @@ public class DateUtils {
         try {
             date = dateFormatter.parse(dateString);
         } catch (ParseException e) {
-            throw new DateUtilsException("Cannot read " + dateString + ". Check date string");
+            throw new DateParseException("Cannot read " + dateString + ". Check date string");
         }
 
         return date;
