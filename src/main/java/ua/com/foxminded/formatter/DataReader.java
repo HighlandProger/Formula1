@@ -20,24 +20,18 @@ public class DataReader {
     private static final String START_LOG = "start.log";
     private static final String END_LOG = "end.log";
 
-    private final List<String> startLapTimes = getDataFromFile(START_LOG);
-    private final List<String> endLapTimes = getDataFromFile(END_LOG);
-    private final List<Racer> racers = readRacersFromFile();
-
     public List<Racer> getRacers() {
-        return racers;
-    }
-
-    private List<Racer> readRacersFromFile() {
 
         List<Racer> racerList = new ArrayList<>();
-        List<String> racersData = getDataFromFile(ABBREVIATIONS_FILE);
 
+        List<String> startLapTimes = getDataFromFile(START_LOG);
+        List<String> endLapTimes = getDataFromFile(END_LOG);
+        List<String> racersData = getDataFromFile(ABBREVIATIONS_FILE);
         racersData.forEach(row -> {
             String[] racerData = row.split("_");
             Racer racer = new Racer(racerData[0], racerData[1], racerData[2]);
-            racer.setStartTimes(getStartLapTimes(racer.getAbbreviation()));
-            racer.setEndTimes(getEndLapTimes(racer.getAbbreviation()));
+            racer.setStartTimes(getLapTimes(startLapTimes, racer.getAbbreviation()));
+            racer.setEndTimes(getLapTimes(endLapTimes, racer.getAbbreviation()));
             racerList.add(racer);
         });
 
@@ -62,12 +56,8 @@ public class DataReader {
         return data;
     }
 
-    private List<Date> getStartLapTimes(String abbreviation) {
-        return getTimePointsByAbbreviation(startLapTimes, abbreviation);
-    }
-
-    private List<Date> getEndLapTimes(String abbreviation) {
-        return getTimePointsByAbbreviation(endLapTimes, abbreviation);
+    private List<Date> getLapTimes(List<String> lapTimes, String abbreviation) {
+        return getTimePointsByAbbreviation(lapTimes, abbreviation);
     }
 
     private List<Date> getTimePointsByAbbreviation(List<String> timePoints, String abbreviation) {

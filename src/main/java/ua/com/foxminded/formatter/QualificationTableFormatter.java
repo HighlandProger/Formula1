@@ -16,7 +16,7 @@ public class QualificationTableFormatter {
     private static final int MAX_SERIAL_NUMBER_AND_DELIMITER_SYMBOLS_COUNT = 19;
 
     private final List<Racer> racers = new DataReader().getRacers();
-    private final int maxTeamFieldSymbolsSize = getMaxTeamFieldSymbolsSize();
+    private final int maxTeamFieldSymbolsSize = getMaxTeamFieldSymbolsSize(racers);
     private final int topRacersUnderlineDashesCount = getTopRacersUnderlineDashesCount();
 
     public String format(List<Racer> racers) {
@@ -77,7 +77,7 @@ public class QualificationTableFormatter {
         return maxNameAndTeamFieldsSymbolsSize + MAX_SERIAL_NUMBER_AND_DELIMITER_SYMBOLS_COUNT;
     }
 
-    private int getMaxTeamFieldSymbolsSize() {
+    private int getMaxTeamFieldSymbolsSize(List<Racer> racers) {
 
         return racers
             .stream()
