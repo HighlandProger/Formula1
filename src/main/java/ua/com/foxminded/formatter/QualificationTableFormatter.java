@@ -14,12 +14,13 @@ public class QualificationTableFormatter {
     private static final String DASH = "-";
     private static final int TOP_RACERS_COUNT = 15;
     private static final int MAX_SERIAL_NUMBER_AND_DELIMITER_SYMBOLS_COUNT = 19;
-
-    private final List<Racer> racers = new DataReader().getRacers();
-    private final int maxTeamFieldSymbolsSize = getMaxTeamFieldSymbolsSize(racers);
-    private final int topRacersUnderlineDashesCount = getTopRacersUnderlineDashesCount();
+    private int maxTeamFieldSymbolsSize;
+    private int topRacersUnderlineDashesCount;
 
     public String format(List<Racer> racers) {
+
+        maxTeamFieldSymbolsSize = getMaxTeamFieldSymbolsSize(racers);
+        topRacersUnderlineDashesCount = getTopRacersUnderlineDashesCount(racers);
 
         StringBuilder builder = new StringBuilder();
 
@@ -66,7 +67,7 @@ public class QualificationTableFormatter {
         return repeatSymbols(DASH, topRacersUnderlineDashesCount);
     }
 
-    private int getTopRacersUnderlineDashesCount() {
+    private int getTopRacersUnderlineDashesCount(List<Racer> racers) {
 
         int maxNameAndTeamFieldsSymbolsSize = racers
             .stream()
@@ -83,7 +84,7 @@ public class QualificationTableFormatter {
             .stream()
             .mapToInt(row -> row.getTeam().length())
             .max()
-            .orElseThrow(NullPointerException::new);
+            .orElseThrow(NoSuchElementException::new);
     }
 
 }

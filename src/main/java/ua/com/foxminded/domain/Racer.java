@@ -1,53 +1,23 @@
 package ua.com.foxminded.domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.Objects;
 
 public class Racer {
 
     private final String abbreviation;
     private final String name;
     private final String team;
-    private List<Date> startTimes;
-    private List<Date> endTimes;
+    private final long bestLapTime;
 
-    public Racer(String abbreviation, String name, String team) {
+    public Racer(String abbreviation, String name, String team, long bestLapTime) {
         this.abbreviation = abbreviation;
         this.name = name;
         this.team = team;
+        this.bestLapTime = bestLapTime;
     }
 
     public long getBestLapTime() {
-
-        if (startTimes.isEmpty() || endTimes.isEmpty()) {
-            return 0;
-        }
-
-        Collections.sort(startTimes);
-        Collections.sort(endTimes);
-
-        List<Long> lapTimes = new ArrayList<>();
-        for (int i = 0; i < endTimes.size(); i++) {
-            long endTime = endTimes.get(i).getTime();
-            long startTime = startTimes.get(i).getTime();
-            lapTimes.add(endTime - startTime);
-        }
-
-        return Collections.min(lapTimes);
-    }
-
-    public void setStartTimes(List<Date> startLapTimes) {
-        this.startTimes = startLapTimes;
-    }
-
-    public void setEndTimes(List<Date> endLapTimes) {
-        this.endTimes = endLapTimes;
-    }
-
-    public String getAbbreviation() {
-        return abbreviation;
+        return bestLapTime;
     }
 
     public String getName() {
@@ -58,4 +28,29 @@ public class Racer {
         return team;
     }
 
+    @Override
+    public String toString() {
+        return "Racer{" +
+            "abbreviation='" + abbreviation + '\'' +
+            ", name='" + name + '\'' +
+            ", team='" + team + '\'' +
+            ", bestLapTime=" + bestLapTime +
+            '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Racer)) return false;
+        Racer racer = (Racer) o;
+        return bestLapTime == racer.bestLapTime &&
+            abbreviation.equals(racer.abbreviation) &&
+            name.equals(racer.name) &&
+            team.equals(racer.team);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(abbreviation, name, team, bestLapTime);
+    }
 }
