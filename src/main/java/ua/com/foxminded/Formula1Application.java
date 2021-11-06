@@ -11,7 +11,11 @@ public class Formula1Application {
 
         DataReader dataReader = new DataReader();
 
-        List<Racer> racers = dataReader.getRacers();
+        String startLog = "start.log";
+        String endLog = "end.log";
+        String abbreviations = "abbreviations.txt";
+
+        List<Racer> racers = dataReader.getRacers(startLog, endLog, abbreviations);
 
         QualificationTableFormatter qualificationTableFormatter = new QualificationTableFormatter();
         System.out.println(qualificationTableFormatter.format(racers));

@@ -17,19 +17,16 @@ import java.util.stream.Collectors;
 public class DataReader {
 
     private static final String RESOURCES_PATH = "src/main/resources/";
-    private static final String ABBREVIATIONS_FILE = "abbreviations.txt";
-    private static final String START_LOG = "start.log";
-    private static final String END_LOG = "end.log";
     private List<String> startLapTimes;
     private List<String> endLapTimes;
 
-    public List<Racer> getRacers() {
+    public List<Racer> getRacers(String startLog, String endLog, String abbreviations) {
 
         List<Racer> racerList = new ArrayList<>();
 
-        startLapTimes = getDataFromFile(START_LOG);
-        endLapTimes = getDataFromFile(END_LOG);
-        List<String> racersData = getDataFromFile(ABBREVIATIONS_FILE);
+        startLapTimes = getDataFromFile(startLog);
+        endLapTimes = getDataFromFile(endLog);
+        List<String> racersData = getDataFromFile(abbreviations);
         racersData.forEach(row -> {
             String[] racerData = row.split("_");
             Racer racer = new Racer(racerData[0], racerData[1], racerData[2], calculateBestLapTime(racerData[0]));
@@ -40,7 +37,6 @@ public class DataReader {
 
         return racerList;
     }
-
 
     private List<String> getDataFromFile(String fileName) {
 
