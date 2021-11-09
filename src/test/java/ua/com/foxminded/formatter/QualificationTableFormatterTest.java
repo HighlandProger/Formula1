@@ -2,8 +2,6 @@ package ua.com.foxminded.formatter;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.stream.Collectors;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class QualificationTableFormatterTest {
@@ -44,7 +42,7 @@ class QualificationTableFormatterTest {
     @Test
     void format_whenListIsOfOneRacer() {
 
-        actualString = formatter.format(TestUtils.getDefaultRacers().stream().limit(1).collect(Collectors.toList()));
+        actualString = formatter.format(TestUtils.getOneRacer());
         expectedString =
             "1. Sebastian Vettel | FERRARI | 01:04.415\n";
 
@@ -55,7 +53,7 @@ class QualificationTableFormatterTest {
     @Test
     void format_whenListIsOfFifteenRacers() {
 
-        actualString = formatter.format(TestUtils.getDefaultRacers().stream().limit(15).collect(Collectors.toList()));
+        actualString = formatter.format(TestUtils.getFifteenRacers());
         expectedString =
             "1. Sebastian Vettel | FERRARI                   | 01:04.415\n" +
                 "2. Daniel Ricciardo | RED BULL RACING TAG HEUER | 01:12.013\n" +

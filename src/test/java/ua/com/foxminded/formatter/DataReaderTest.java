@@ -15,6 +15,7 @@ class DataReaderTest {
     private static final String EMPTY_FOLDER_PATH = "testcase1/";
     private static final String ONLY_ABBREVIATIONS_FOLDER_PATH = "testcase2/";
     private static final String TWO_OR_MANY_LOGS_FOR_RACES_FOLDER_PATH = "testcase3/";
+    private static final String NO_END_LOGS_FOR_SOME_RACERS_FOLDER_PATH = "testcase4/";
     private static final String START_LOG = "start.log";
     private static final String END_LOG = "end.log";
     private static final String ABBREVIATIONS = "abbreviations.txt";
@@ -70,6 +71,17 @@ class DataReaderTest {
         setFolderPath(TWO_OR_MANY_LOGS_FOR_RACES_FOLDER_PATH);
 
         expectedRacers = TestUtils.getRacersWithManyTimePoints();
+        actualRacers = dataReader.getRacers(startLog, endLog, abbreviations);
+
+        assertEquals(expectedRacers, actualRacers);
+    }
+
+    @Test
+    void getRacers_whenSomeRacersHaveNoBestLapTime() {
+
+        setFolderPath(NO_END_LOGS_FOR_SOME_RACERS_FOLDER_PATH);
+
+        expectedRacers = TestUtils.getDefaultRacersWithLessTimePoints();
         actualRacers = dataReader.getRacers(startLog, endLog, abbreviations);
 
         assertEquals(expectedRacers, actualRacers);

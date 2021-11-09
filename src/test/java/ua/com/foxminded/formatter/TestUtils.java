@@ -62,4 +62,60 @@ public class TestUtils {
         return racers;
     }
 
+    public static List<Racer> getDefaultRacersWithLessTimePoints() {
+
+        List<Racer> racers = new ArrayList<>();
+        racers.add(new Racer("DRR", "Daniel Ricciardo", "RED BULL RACING TAG HEUER", 72013));
+        racers.add(new Racer("VBM", "Valtteri Bottas", "MERCEDES", 72434));
+        racers.add(new Racer("LHM", "Lewis Hamilton", "MERCEDES", 72460));
+        racers.add(new Racer("KRF", "Kimi Raikkonen", "FERRARI", 72639));
+        racers.add(new Racer("SSW", "Sergey Sirotkin", "WILLIAMS MERCEDES", 72706));
+        racers.add(new Racer("CLS", "Charles Leclerc", "SAUBER FERRARI", 72829));
+        racers.add(new Racer("SPF", "Sergio Perez", "FORCE INDIA MERCEDES", 72848));
+        racers.add(new Racer("RGH", "Romain Grosjean", "HAAS FERRARI", 72930));
+        racers.add(new Racer("PGS", "Pierre Gasly", "SCUDERIA TORO ROSSO HONDA", 72941));
+        racers.add(new Racer("EOF", "Esteban Ocon", "FORCE INDIA MERCEDES", 73028));
+        racers.add(new Racer("BHS", "Brendon Hartley", "SCUDERIA TORO ROSSO HONDA", 73179));
+        racers.add(new Racer("MES", "Marcus Ericsson", "SAUBER FERRARI", 73265));
+        racers.add(new Racer("KMH", "Kevin Magnussen", "HAAS FERRARI", 73393));
+        racers.add(new Racer("SVF", "Sebastian Vettel", "FERRARI", 0));
+        racers.add(new Racer("FAM", "Fernando Alonso", "MCLAREN RENAULT", 0));
+        racers.add(new Racer("CSR", "Carlos Sainz", "RENAULT", 0));
+        racers.add(new Racer("NHR", "Nico Hulkenberg", "RENAULT", 0));
+        racers.add(new Racer("SVM", "Stoffel Vandoorne", "MCLAREN RENAULT", 0));
+        racers.add(new Racer("LSW", "Lance Stroll", "WILLIAMS MERCEDES", 0));
+
+        return racers;
+    }
+
+    public static List<Racer> getOneRacer() {
+
+        List<Racer> racers = new ArrayList<>();
+        racers.add(new Racer("SVF", "Sebastian Vettel", "FERRARI", 64415));
+
+        return racers;
+    }
+
+    public static List<Racer> getFifteenRacers() {
+
+        List<Racer> racers = new ArrayList<>();
+        racers.add(new Racer("SVF", "Sebastian Vettel", "FERRARI", 64415));
+        racers.add(new Racer("DRR", "Daniel Ricciardo", "RED BULL RACING TAG HEUER", 72013));
+        racers.add(new Racer("VBM", "Valtteri Bottas", "MERCEDES", 72434));
+        racers.add(new Racer("LHM", "Lewis Hamilton", "MERCEDES", 72460));
+        racers.add(new Racer("SVM", "Stoffel Vandoorne", "MCLAREN RENAULT", 72463));
+        racers.add(new Racer("KRF", "Kimi Raikkonen", "FERRARI", 72639));
+        racers.add(new Racer("FAM", "Fernando Alonso", "MCLAREN RENAULT", 72657));
+        racers.add(new Racer("SSW", "Sergey Sirotkin", "WILLIAMS MERCEDES", 72706));
+        racers.add(new Racer("CLS", "Charles Leclerc", "SAUBER FERRARI", 72829));
+        racers.add(new Racer("SPF", "Sergio Perez", "FORCE INDIA MERCEDES", 72848));
+        racers.add(new Racer("RGH", "Romain Grosjean", "HAAS FERRARI", 72930));
+        racers.add(new Racer("PGS", "Pierre Gasly", "SCUDERIA TORO ROSSO HONDA", 72941));
+        racers.add(new Racer("CSR", "Carlos Sainz", "RENAULT", 72950));
+        racers.add(new Racer("EOF", "Esteban Ocon", "FORCE INDIA MERCEDES", 73028));
+        racers.add(new Racer("NHR", "Nico Hulkenberg", "RENAULT", 73065));
+
+        return racers;
+    }
+
 }
