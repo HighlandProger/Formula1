@@ -6,11 +6,15 @@ public class RacerComparator implements Comparator<Racer> {
 
     @Override
     public int compare(Racer racer1, Racer racer2) {
-        if (racer1.getBestLapTime() == 0 || racer2.getBestLapTime() == 0) {
-
-            return -Long.compare(racer1.getBestLapTime(), racer2.getBestLapTime());
+        long time1 = racer1.getBestLapTime();
+        long time2 = racer2.getBestLapTime();
+        if (time1 == 0L) {
+            return 1;
+        }
+        if (time2 == 0L) {
+            return -1;
         }
 
-        return Long.compare(racer1.getBestLapTime(), racer2.getBestLapTime());
+        return Long.compare(time1, time2);
     }
 }
